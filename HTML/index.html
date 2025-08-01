@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💰 Catatan Tabungan Harian</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Icon Bootstrap -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../STYLE/style.css" />
+  
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      animation: gradientShift 10s ease infinite;
+    }
+    
+    @keyframes gradientShift {
+      0% { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+      50% { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+      100% { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    }
+    
+    .main-card {
+      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .main-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+    }
+    
+    .animated-title {
+      background: linear-gradient(45deg, #667eea, #764ba2, #f093fb);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: titleGlow 3s ease-in-out infinite;
+    }
+    
+    @keyframes titleGlow {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    .btn-modern {
+      border-radius: 25px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-modern:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s;
+    }
+    
+    .btn-modern:hover:before {
+      left: 100%;
+    }
+    
+    .btn-success.btn-modern:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
+    }
+    
+    .btn-outline-primary.btn-modern:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(13, 110, 253, 0.3);
+    }
+    
+    .pulse-input {
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+    
+    .pulse-input:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+      transform: scale(1.02);
+    }
+    
+    .status-card {
+      border-radius: 20px;
+      border: none;
+      background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(40, 167, 69, 0.2));
+      backdrop-filter: blur(10px);
+      animation: fadeInUp 0.6s ease;
+    }
+    
+    .total-card {
+      border-radius: 20px;
+      border: none;
+      background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 193, 7, 0.2));
+      backdrop-filter: blur(10px);
+      animation: fadeInUp 0.8s ease;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .history-section {
+      animation: fadeInUp 1s ease;
+    }
+    
+    .list-group-item {
+      border-radius: 15px !important;
+      margin-bottom: 10px;
+      border: none !important;
+      background: rgba(255, 255, 255, 0.8) !important;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+    
+    .list-group-item:hover {
+      transform: translateX(10px);
+      background: rgba(255, 255, 255, 0.95) !important;
+    }
+    
+    .floating-elements {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .floating-coin {
+      position: absolute;
+      color: rgba(255, 215, 0, 0.3);
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+    
+    .date-input {
+      border-radius: 15px;
+      border: 2px solid #e9ecef;
+      transition: all 0.3s ease;
+    }
+    
+    .date-input:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 15px rgba(102, 126, 234, 0.2);
+    }
+    
+    /* Welcome Banner Styles */
+    .welcome-banner {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+      backdrop-filter: blur(20px);
+      border-radius: 25px;
+      padding: 30px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+      animation: welcomeSlideIn 1.2s ease-out;
+    }
+    
+    @keyframes welcomeSlideIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.8);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    
+    .welcome-title {
+      background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+      font-size: 2.2rem;
+      animation: welcomeGradient 3s ease infinite;
+      margin-bottom: 10px;
+    }
+    
+    @keyframes welcomeGradient {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    .welcome-subtitle {
+      color: #666;
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin: 0;
+      animation: welcomeFadeIn 1.5s ease 0.5s both;
+    }
+    
+    @keyframes welcomeFadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    
+    .coin-rain {
+      position: absolute;
+      top: -20px;
+      right: 20px;
+      width: 60px;
+      height: 100px;
+    }
+    
+    .coin-drop {
+      position: absolute;
+      color: #ffd700;
+      font-size: 1.5rem;
+      animation: coinFall 2s ease-in-out infinite;
+    }
+    
+    .coin-drop:nth-child(1) { left: 0; animation-delay: 0s; }
+    .coin-drop:nth-child(2) { left: 20px; animation-delay: 0.5s; }
+    .coin-drop:nth-child(3) { left: 40px; animation-delay: 1s; }
+    
+    @keyframes coinFall {
+      0% {
+        transform: translateY(-20px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    
+    /* Magic Icon Animation */
+    .magic-icon {
+      animation: magicBounce 2s ease-in-out infinite;
+    }
+    
+    @keyframes magicBounce {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      25% { transform: scale(1.1) rotate(-5deg); }
+      50% { transform: scale(1.05) rotate(5deg); }
+      75% { transform: scale(1.1) rotate(-5deg); }
+    }
+    
+    /* Typing Animation */
+    .typing-animation {
+      display: inline-block;
+      color: #666;
+      font-weight: 500;
+    }
+    
+    /* Enhanced Button Effects */
+    .btn-modern {
+      position: relative;
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      border: none;
+      color: white;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      overflow: hidden;
+      border-radius: 25px;
+    }
+    
+    .btn-modern::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transition: left 0.6s ease;
+    }
+    
+    .btn-modern:hover::before {
+      left: 100%;
+    }
+    
+    .btn-modern:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+    }
+    
+    .btn-outline-primary.btn-modern {
+      background: linear-gradient(45deg, #f093fb, #f5576c);
+      border: 2px solid transparent;
+    }
+    
+    .btn-outline-primary.btn-modern:hover {
+      box-shadow: 0 15px 30px rgba(240, 147, 251, 0.4);
+    }
+    
+    /* Enhanced List Items */
+    .list-group-item {
+      border-radius: 15px !important;
+      margin-bottom: 10px;
+      border: none !important;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7)) !important;
+      backdrop-filter: blur(10px);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .list-group-item::before {
+      content: '💰';
+      position: absolute;
+      left: -30px;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: left 0.3s ease;
+    }
+    
+    .list-group-item:hover {
+      transform: translateX(15px) scale(1.02);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85)) !important;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    
+    .list-group-item:hover::before {
+      left: 10px;
+    }
+    
+    /* Loading Animation for Status Cards */
+    .status-card, .total-card {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .status-card::after, .total-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      animation: cardShine 3s ease-in-out infinite;
+    }
+    
+    @keyframes cardShine {
+      0% { left: -100%; }
+      50% { left: 100%; }
+      100% { left: 100%; }
+    }
+  </style>
+</head>
+<body style="background: linear-gradient(to right, #d4fc79, #96e6a1); min-height: 100vh;">
+
+  <!-- Floating Elements -->
+  <div class="floating-elements">
+    <i class="bi bi-coin floating-coin" style="top: 10%; left: 10%; font-size: 2rem; animation-delay: 0s;"></i>
+    <i class="bi bi-currency-dollar floating-coin" style="top: 20%; right: 15%; font-size: 1.5rem; animation-delay: 1s;"></i>
+    <i class="bi bi-piggy-bank floating-coin" style="top: 60%; left: 5%; font-size: 2.5rem; animation-delay: 2s;"></i>
+    <i class="bi bi-cash-coin floating-coin" style="top: 80%; right: 10%; font-size: 1.8rem; animation-delay: 3s;"></i>
+    <i class="bi bi-wallet2 floating-coin" style="top: 40%; right: 20%; font-size: 2rem; animation-delay: 4s;"></i>
+  </div>
+
+  <!-- Floating Particles -->
+  <div class="floating-particles" id="particles"></div>
+
+  <div class="container py-5">
+    <!-- Welcome Banner for Ririn -->
+    <div class="welcome-banner mb-4">
+      <div class="welcome-content">
+        <h2 class="welcome-title">🌟 Selamat Datang, Ririn! 🌟</h2>
+        <p class="welcome-subtitle">Mari mulai menabung hari ini untuk masa depan yang cerah! ✨</p>
+      </div>
+      <div class="welcome-animation">
+        <div class="coin-rain">
+          <i class="bi bi-coin coin-drop"></i>
+          <i class="bi bi-coin coin-drop"></i>
+          <i class="bi bi-coin coin-drop"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="card main-card shadow-lg p-4 rounded-4">
+      <h1 class="text-center mb-4 animated-title fw-bold">
+        <i class="bi bi-piggy-bank-fill magic-icon"></i> Catatan Tabungan Harian
+      </h1>
+      <p class="text-center text-muted mb-4">
+        <span class="typing-animation">💰 Kelola tabungan harianmu dengan mudah dan menyenangkan!</span>
+      </p>
+
+      <div class="row g-3 align-items-center mb-4">
+        <div class="col-md-8">
+          <div class="input-group">
+            <span class="input-group-text bg-success text-white">
+              <i class="bi bi-currency-dollar"></i>
+            </span>
+            <input type="number" id="jumlah" class="form-control form-control-lg pulse-input" placeholder="Masukkan jumlah tabungan (Rp)" />
+          </div>
+        </div>
+        <div class="col-md-4 d-flex gap-2">
+          <button class="btn btn-success btn-modern w-100" onclick="tambahTabungan()">
+            <i class="bi bi-plus-circle"></i> Tambah
+          </button>
+          <button class="btn btn-outline-primary btn-modern w-100" onclick="exportCSV()">
+            <i class="bi bi-download"></i> Export
+          </button>
+        </div>
+      </div>
+
+      <div class="row g-3 mt-2">
+        <div class="col-md-6">
+          <div id="statusHariIni" class="alert status-card fw-semibold text-center">
+            <i class="bi bi-calendar-check"></i>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div id="totalSemua" class="alert total-card fw-semibold text-center">
+            <i class="bi bi-piggy-bank"></i>
+          </div>
+        </div>
+      </div>
+
+      <hr class="my-4" style="border: 2px solid #e9ecef; border-radius: 2px;" />
+
+      <div class="history-section">
+        <h4 class="text-secondary mb-3">
+          <i class="bi bi-clock-history me-2"></i> Riwayat Tabungan
+        </h4>
+        <div class="mb-3 mt-2">
+          <label for="filterTanggal" class="form-label text-muted">📅 Filter berdasarkan tanggal:</label>
+          <input type="date" id="filterTanggal" class="form-control date-input w-auto" onchange="render()" />
+        </div>
+        <ul id="listTabungan" class="list-group"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="../STYLE/JavaScript/script.js"></script>
+  
+  <script>
+    // Enhanced sparkle effect with multiple colors
+    function addSparkleEffect() {
+      const colors = ['✨', '🌟', '💫', '⭐', '🎉'];
+      
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+          const sparkle = document.createElement('div');
+          sparkle.innerHTML = colors[Math.floor(Math.random() * colors.length)];
+          sparkle.style.position = 'fixed';
+          sparkle.style.left = Math.random() * window.innerWidth + 'px';
+          sparkle.style.top = Math.random() * window.innerHeight + 'px';
+          sparkle.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
+          sparkle.style.pointerEvents = 'none';
+          sparkle.style.animation = 'sparkleFloat 2s ease-out forwards';
+          sparkle.style.zIndex = '1000';
+          
+          document.body.appendChild(sparkle);
+          
+          setTimeout(() => {
+            sparkle.remove();
+          }, 2000);
+        }, i * 100);
+      }
+    }
+    
+    // Confetti effect
+    function createConfetti() {
+      const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3'];
+      
+      for (let i = 0; i < 30; i++) {
+        const confetti = document.createElement('div');
+        confetti.style.position = 'fixed';
+        confetti.style.left = Math.random() * window.innerWidth + 'px';
+        confetti.style.top = '-10px';
+        confetti.style.width = '10px';
+        confetti.style.height = '10px';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.borderRadius = '50%';
+        confetti.style.pointerEvents = 'none';
+        confetti.style.animation = `confettiFall ${Math.random() * 3 + 2}s linear forwards`;
+        confetti.style.zIndex = '999';
+        
+        document.body.appendChild(confetti);
+        
+        setTimeout(() => {
+          confetti.remove();
+        }, 5000);
+      }
+    }
+    
+    // Success notification
+    function showSuccessNotification(amount) {
+      const notification = document.createElement('div');
+      notification.innerHTML = `
+        <div style="
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: linear-gradient(135deg, #667eea, #764ba2);
+          color: white;
+          padding: 20px;
+          border-radius: 15px;
+          font-weight: 600;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+          z-index: 1001;
+          animation: slideInRight 0.5s ease;
+        ">
+          🎉 Selamat Ririn! <br>
+          💰 Rp${amount.toLocaleString()} berhasil ditambahkan!
+        </div>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.style.animation = 'slideOutRight 0.5s ease forwards';
+        setTimeout(() => notification.remove(), 500);
+      }, 3000);
+    }
+
+    // Add CSS for new animations
+    const additionalStyle = document.createElement('style');
+    additionalStyle.textContent = `
+      @keyframes confettiFall {
+        to {
+          transform: translateY(100vh) rotate(360deg);
+        }
+      }
+      
+      @keyframes slideInRight {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+      
+      @keyframes slideOutRight {
+        from {
+          transform: translateX(0);
+          opacity: 1;
+        }
+        to {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(additionalStyle);
+
+    // Add CSS for sparkle animation
+    const sparkleStyle = document.createElement('style');
+    sparkleStyle.textContent = `
+      @keyframes sparkleFloat {
+        0% {
+          opacity: 1;
+          transform: translateY(0px) scale(0);
+        }
+        50% {
+          opacity: 1;
+          transform: translateY(-50px) scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-100px) scale(0);
+        }
+      }
+    `;
+    document.head.appendChild(sparkleStyle);
+    
+    // Override the original tambahTabungan function to add effects
+    const originalTambahTabungan = window.tambahTabungan;
+    window.tambahTabungan = function() {
+      const jumlah = parseInt(document.getElementById("jumlah").value);
+      if (isNaN(jumlah) || jumlah <= 0) {
+        // Show error with shake effect
+        const input = document.getElementById("jumlah");
+        input.style.animation = 'shake 0.5s ease';
+        setTimeout(() => input.style.animation = '', 500);
+        return;
+      }
+      
+      originalTambahTabungan();
+      addSparkleEffect();
+      createConfetti();
+      showSuccessNotification(jumlah);
+      
+      // Add success sound effect simulation
+      const successSound = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+n0v2seBiuA2vPCdSMFKIXO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+n0v2seBiuA2vPCdSMFKIXO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+n0v2seBiuA2vPCdSMFKIXO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+n0v2seBiuA2vPCdSMF');
+      successSound.volume = 0.1;
+      successSound.play().catch(() => {}); // Ignore errors if audio doesn't play
+    };
+    
+    // Create floating particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      
+      for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 20 + 's';
+        particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+        particlesContainer.appendChild(particle);
+      }
+    }
+    
+    // Welcome message with typing effect
+    function showWelcomeMessage() {
+      setTimeout(() => {
+        const welcomeBanner = document.querySelector('.welcome-banner');
+        if (welcomeBanner) {
+          welcomeBanner.style.animation = 'pulse 2s ease-in-out infinite';
+        }
+      }, 2000);
+    }
+    
+    // Add shake animation for input error
+    const shakeStyle = document.createElement('style');
+    shakeStyle.textContent = `
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-10px); }
+        75% { transform: translateX(10px); }
+      }
+      
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.02); }
+      }
+    `;
+    document.head.appendChild(shakeStyle);
+    
+    // Initialize particles and welcome message when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      createParticles();
+      showWelcomeMessage();
+      
+      // Add entrance animation to main card
+      const mainCard = document.querySelector('.main-card');
+      if (mainCard) {
+        mainCard.style.animation = 'fadeInUp 1s ease 0.5s both';
+      }
+      
+      // Enhanced typing animation
+      function typeWriter() {
+        const text = '💰 Kelola tabungan harianmu dengan mudah dan menyenangkan!';
+        const typingElement = document.querySelector('.typing-animation');
+        let i = 0;
+        
+        // Clear the text first
+        typingElement.innerHTML = '';
+        typingElement.style.borderRight = '2px solid #667eea';
+        
+        function type() {
+          if (i < text.length) {
+            typingElement.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, 80); // Speed of typing
+          } else {
+            // Start blinking cursor after typing is done
+            setInterval(() => {
+              typingElement.style.borderRight = typingElement.style.borderRight === '2px solid transparent' 
+                ? '2px solid #667eea' 
+                : '2px solid transparent';
+            }, 500);
+          }
+        }
+        
+        setTimeout(type, 2000); // Start typing after 2 seconds
+      }
+      
+      typeWriter();
+    });
+  </script>
+</body>
+</html>
