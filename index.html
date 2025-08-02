@@ -2,7 +2,10 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <title>💰 Catatan Tabungan Harian</title>
 
   <!-- Bootstrap -->
@@ -346,6 +349,214 @@
       box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
       outline: none;
     }
+    
+    /* Mobile Responsive Styles */
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px !important;
+      }
+      
+      .welcome-banner {
+        padding: 20px 15px;
+        margin-bottom: 20px;
+      }
+      
+      .welcome-title {
+        font-size: 1.8rem !important;
+        margin-bottom: 10px;
+      }
+      
+      .welcome-subtitle {
+        font-size: 1rem !important;
+      }
+      
+      .coin-animation {
+        font-size: 1.5rem !important;
+      }
+      
+      .main-card {
+        padding: 20px !important;
+        margin: 0 5px;
+      }
+      
+      .animated-title {
+        font-size: 1.5rem !important;
+        margin-bottom: 15px !important;
+      }
+      
+      .magic-icon {
+        font-size: 1.3rem;
+      }
+      
+      /* Mobile input styling */
+      .row.g-4.align-items-center.mb-5 {
+        margin-bottom: 2rem !important;
+      }
+      
+      .col-md-8, .col-md-4 {
+        margin-bottom: 15px;
+      }
+      
+      .enhanced-input {
+        font-size: 16px !important; /* Prevents zoom on iOS */
+        padding: 12px 15px !important;
+      }
+      
+      .input-group-text {
+        padding: 12px 15px;
+      }
+      
+      .btn-modern {
+        padding: 12px 20px !important;
+        font-size: 0.9rem !important;
+        margin-bottom: 10px;
+      }
+      
+      .d-flex.gap-3 {
+        flex-direction: column !important;
+        gap: 10px !important;
+      }
+      
+      /* Mobile status cards */
+      .col-md-6 {
+        margin-bottom: 15px;
+      }
+      
+      .status-card, .total-card {
+        padding: 15px !important;
+        font-size: 0.9rem;
+      }
+      
+      .status-card i, .total-card i {
+        font-size: 1.2rem !important;
+      }
+      
+      /* Mobile history section */
+      .history-section h4 {
+        font-size: 1.2rem !important;
+        margin-bottom: 15px !important;
+      }
+      
+      .date-input {
+        width: 100% !important;
+        max-width: none !important;
+        margin-bottom: 15px;
+      }
+      
+      .list-group-item {
+        font-size: 0.9rem;
+        padding: 12px 15px !important;
+        margin-bottom: 8px !important;
+      }
+      
+      .list-group-item:hover {
+        transform: translateX(10px) scale(1.01) !important;
+      }
+      
+      .list-group-item::before {
+        font-size: 1rem !important;
+      }
+      
+      .list-group-item:hover::before {
+        left: 10px !important;
+      }
+      
+      /* Mobile floating elements - reduce for performance */
+      .floating-element {
+        display: none;
+      }
+      
+      /* Reduce animations on mobile */
+      .coin-animation {
+        animation-duration: 6s !important;
+      }
+      
+      /* Mobile notifications */
+      .notification-mobile {
+        left: 15px !important;
+        right: 15px !important;
+        top: 15px !important;
+        max-width: none !important;
+        font-size: 1rem !important;
+        padding: 20px !important;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .welcome-title {
+        font-size: 1.6rem !important;
+      }
+      
+      .welcome-subtitle {
+        font-size: 0.9rem !important;
+      }
+      
+      .main-card {
+        padding: 15px !important;
+      }
+      
+      .animated-title {
+        font-size: 1.3rem !important;
+      }
+      
+      .enhanced-input {
+        font-size: 16px !important;
+        padding: 10px 12px !important;
+      }
+      
+      .btn-modern {
+        padding: 10px 15px !important;
+        font-size: 0.85rem !important;
+      }
+      
+      .status-card, .total-card {
+        padding: 12px !important;
+        font-size: 0.85rem;
+      }
+      
+      .list-group-item {
+        font-size: 0.85rem;
+        padding: 10px 12px !important;
+      }
+      
+      /* Smaller coin animations for very small screens */
+      .coin-animation {
+        font-size: 1.2rem !important;
+      }
+      
+      /* Hide some decorative elements on very small screens */
+      .floating-bg {
+        display: none;
+      }
+    }
+    
+    /* Touch-friendly improvements */
+    @media (hover: none) and (pointer: coarse) {
+      .btn-modern:hover {
+        transform: none !important;
+      }
+      
+      .list-group-item:hover {
+        transform: none !important;
+      }
+      
+      .main-card:hover {
+        transform: none !important;
+      }
+      
+      /* Larger touch targets */
+      .btn-modern {
+        min-height: 48px;
+      }
+      
+      .enhanced-input {
+        min-height: 48px;
+      }
+      
+      .date-input {
+        min-height: 48px;
+      }
+    }
   </style>
 </head>
 <body style="background: linear-gradient(to right, #d4fc79, #96e6a1); min-height: 100vh;">
@@ -379,8 +590,8 @@
         💸 Kelola tabungan harianmu dengan mudah dan menyenangkan!
       </p>
 
-      <div class="row g-4 align-items-center mb-5">
-        <div class="col-md-8">
+      <div class="row g-3 align-items-center mb-4">
+        <div class="col-12 col-md-8 mb-3 mb-md-0">
           <div class="input-group input-group-lg">
             <span class="input-group-text" style="background: linear-gradient(135deg, #28a745, #20c997); color: white; border: none; border-radius: 15px 0 0 15px;">
               <i class="bi bi-currency-dollar"></i>
@@ -388,25 +599,27 @@
             <input type="number" id="jumlah" class="enhanced-input" placeholder="Masukkan jumlah tabungan (Rp)" style="border-radius: 0 15px 15px 0;" />
           </div>
         </div>
-        <div class="col-md-4 d-flex gap-3">
-          <button class="btn btn-modern btn-lg w-100" onclick="tambahTabungan()">
-            <i class="bi bi-plus-circle me-2"></i> Tambah
-          </button>
-          <button class="btn btn-modern btn-export btn-lg w-100" onclick="exportCSV()">
-            <i class="bi bi-download me-2"></i> Export
-          </button>
+        <div class="col-12 col-md-4">
+          <div class="d-grid d-md-flex gap-2">
+            <button class="btn btn-modern btn-lg flex-fill" onclick="tambahTabungan()">
+              <i class="bi bi-plus-circle me-2"></i> <span class="d-none d-sm-inline">Tambah</span><span class="d-sm-none">+</span>
+            </button>
+            <button class="btn btn-modern btn-export btn-lg flex-fill" onclick="exportCSV()">
+              <i class="bi bi-download me-2"></i> <span class="d-none d-sm-inline">Export</span><span class="d-sm-none">📤</span>
+            </button>
+          </div>
         </div>
       </div>
 
-      <div class="row g-4 mb-5">
-        <div class="col-md-6">
-          <div id="statusHariIni" class="alert status-card fw-bold text-center py-4">
+      <div class="row g-3 mb-4">
+        <div class="col-12 col-md-6">
+          <div id="statusHariIni" class="alert status-card fw-bold text-center py-3">
             <i class="bi bi-calendar-check-fill me-2" style="font-size: 1.5rem;"></i>
             <div>Loading...</div>
           </div>
         </div>
-        <div class="col-md-6">
-          <div id="totalSemua" class="alert total-card fw-bold text-center py-4">
+        <div class="col-12 col-md-6">
+          <div id="totalSemua" class="alert total-card fw-bold text-center py-3">
             <i class="bi bi-piggy-bank-fill me-2" style="font-size: 1.5rem;"></i>
             <div>Loading...</div>
           </div>
@@ -420,11 +633,13 @@
           <i class="bi bi-clock-history me-3" style="color: #667eea;"></i> 
           📈 Riwayat Tabungan
         </h4>
-        <div class="mb-4">
-          <label for="filterTanggal" class="form-label fw-semibold" style="color: #666;">
-            📅 Filter berdasarkan tanggal:
-          </label>
-          <input type="date" id="filterTanggal" class="form-control date-input" style="max-width: 200px;" onchange="render()" />
+        <div class="row mb-3">
+          <div class="col-12 col-sm-6 col-md-4">
+            <label for="filterTanggal" class="form-label fw-semibold" style="color: #666;">
+              📅 Filter berdasarkan tanggal:
+            </label>
+            <input type="date" id="filterTanggal" class="form-control date-input w-100" onchange="render()" />
+          </div>
         </div>
         <ul id="listTabungan" class="list-group"></ul>
       </div>
@@ -439,15 +654,17 @@
     // Sparkle effect when adding savings
     function createSparkles() {
       const sparkleEmojis = ['✨', '🌟', '💫', '⭐', '🎉', '🎊', '💰', '🪙'];
+      const isMobile = window.innerWidth <= 768;
+      const sparkleCount = isMobile ? 4 : 8; // Reduce sparkles on mobile
       
-      for (let i = 0; i < 8; i++) {
+      for (let i = 0; i < sparkleCount; i++) {
         setTimeout(() => {
           const sparkle = document.createElement('div');
           sparkle.innerHTML = sparkleEmojis[Math.floor(Math.random() * sparkleEmojis.length)];
           sparkle.style.position = 'fixed';
           sparkle.style.left = Math.random() * window.innerWidth + 'px';
           sparkle.style.top = Math.random() * window.innerHeight + 'px';
-          sparkle.style.fontSize = (Math.random() * 2 + 1.5) + 'rem';
+          sparkle.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
           sparkle.style.pointerEvents = 'none';
           sparkle.style.zIndex = '9999';
           sparkle.style.animation = 'sparkleExplosion 2s ease-out forwards';
@@ -455,29 +672,31 @@
           document.body.appendChild(sparkle);
           
           setTimeout(() => sparkle.remove(), 2000);
-        }, i * 100);
+        }, i * (isMobile ? 150 : 100)); // Slower timing on mobile
       }
     }
     
     // Confetti celebration
     function createConfetti() {
       const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3', '#a8e6cf', '#ffd93d'];
+      const isMobile = window.innerWidth <= 768;
+      const confettiCount = isMobile ? 20 : 40; // Reduce confetti on mobile
       
-      for (let i = 0; i < 40; i++) {
+      for (let i = 0; i < confettiCount; i++) {
         const confetti = document.createElement('div');
         confetti.style.position = 'fixed';
         confetti.style.left = Math.random() * 100 + '%';
         confetti.style.top = '-10px';
-        confetti.style.width = Math.random() * 10 + 5 + 'px';
+        confetti.style.width = Math.random() * 8 + 4 + 'px';
         confetti.style.height = confetti.style.width;
         confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
         confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
         confetti.style.pointerEvents = 'none';
         confetti.style.zIndex = '9998';
-        confetti.style.animation = `confettifall ${Math.random() * 3 + 2}s linear forwards`;
+        confetti.style.animation = `confettifall ${Math.random() * 2 + 2}s linear forwards`;
         
         document.body.appendChild(confetti);
-        setTimeout(() => confetti.remove(), 5000);
+        setTimeout(() => confetti.remove(), 4000);
       }
     }
     
@@ -491,23 +710,23 @@
       ];
       
       const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+      const isMobile = window.innerWidth <= 768;
       
       const notification = document.createElement('div');
       notification.innerHTML = `
         <div style="
           position: fixed;
-          top: 30px;
-          right: 30px;
+          ${isMobile ? 'top: 15px; left: 15px; right: 15px;' : 'top: 30px; right: 30px; max-width: 350px;'}
           background: linear-gradient(135deg, #667eea, #764ba2);
           color: white;
-          padding: 25px 30px;
+          padding: ${isMobile ? '20px' : '25px 30px'};
           border-radius: 20px;
           font-weight: 600;
-          font-size: 1.1rem;
+          font-size: ${isMobile ? '1rem' : '1.1rem'};
           box-shadow: 0 15px 40px rgba(0,0,0,0.3);
           z-index: 10000;
           animation: slideInBounce 0.8s ease;
-          max-width: 350px;
+          text-align: center;
         ">
           ${randomMessage}
         </div>
@@ -611,19 +830,21 @@
           
           // Show error notification
           const errorNotif = document.createElement('div');
+          const isMobile = window.innerWidth <= 768;
           errorNotif.innerHTML = `
             <div style="
               position: fixed;
-              top: 30px;
-              right: 30px;
+              ${isMobile ? 'top: 15px; left: 15px; right: 15px;' : 'top: 30px; right: 30px;'}
               background: linear-gradient(135deg, #ff6b6b, #ee5a24);
               color: white;
-              padding: 20px 25px;
+              padding: ${isMobile ? '20px' : '20px 25px'};
               border-radius: 15px;
               font-weight: 600;
               box-shadow: 0 10px 30px rgba(255,107,107,0.4);
               z-index: 10000;
               animation: slideInBounce 0.5s ease;
+              text-align: center;
+              font-size: ${isMobile ? '1rem' : '1rem'};
             ">
               ⚠️ Masukkan jumlah tabungan yang valid, Ririn!
             </div>
@@ -709,6 +930,10 @@
       
       // Create floating particles
       function createFloatingParticles() {
+        // Reduce particles on mobile for better performance
+        const isMobile = window.innerWidth <= 768;
+        if (isMobile) return; // Skip particles on mobile
+        
         const particles = ['💰', '🪙', '✨', '🌟', '💎'];
         
         setInterval(() => {
@@ -726,7 +951,7 @@
           document.body.appendChild(particle);
           
           setTimeout(() => particle.remove(), 25000);
-        }, 3000);
+        }, 6000); // Slower interval for mobile
       }
       
       createFloatingParticles();
