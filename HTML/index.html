@@ -435,6 +435,12 @@
             <i class="bi bi-download"></i> Export
           </button>
         </div>
+        <div class="col-12 mt-2">
+          <small class="text-muted">
+            Debug: <button class="btn btn-sm btn-outline-danger" onclick="clearAllData()">Clear Data</button>
+            <button class="btn btn-sm btn-outline-info" onclick="console.log('Current data:', tabungan)">Check Data</button>
+          </small>
+        </div>
       </div>
 
       <div class="row g-3 mt-2">
@@ -465,7 +471,7 @@
     </div>
   </div>
 
-  <script src="../STYLE/JavaScript/script.js"></script>
+  <script src="../JAVASCRIPT/script.js"></script>
   
   <script>
     // Enhanced sparkle effect with multiple colors
@@ -602,27 +608,36 @@
     document.head.appendChild(sparkleStyle);
     
     // Override the original tambahTabungan function to add effects
-    const originalTambahTabungan = window.tambahTabungan;
-    window.tambahTabungan = function() {
-      const jumlah = parseInt(document.getElementById("jumlah").value);
-      if (isNaN(jumlah) || jumlah <= 0) {
-        // Show error with shake effect
-        const input = document.getElementById("jumlah");
-        input.style.animation = 'shake 0.5s ease';
-        setTimeout(() => input.style.animation = '', 500);
-        return;
-      }
+    window.addEventListener('load', function() {
+      const originalTambahTabungan = window.tambahTabungan;
       
-      originalTambahTabungan();
-      addSparkleEffect();
-      createConfetti();
-      showSuccessNotification(jumlah);
-      
-      // Add success sound effect simulation
-      const successSound = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+n0v2seBiuA2vPCdSMFKIXO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+n0v2seBiuA2vPCdSMFKIXO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+n0v2seBiuA2vPCdSMFKIXO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+n0v2seBiuA2vPCdSMF');
-      successSound.volume = 0.1;
-      successSound.play().catch(() => {}); // Ignore errors if audio doesn't play
-    };
+      window.tambahTabungan = function() {
+        const jumlah = parseInt(document.getElementById("jumlah").value);
+        if (isNaN(jumlah) || jumlah <= 0) {
+          // Show error with shake effect
+          const input = document.getElementById("jumlah");
+          input.style.animation = 'shake 0.5s ease';
+          setTimeout(() => input.style.animation = '', 500);
+          alert("Masukkan jumlah tabungan yang valid.");
+          return;
+        }
+        
+        // Call original function first
+        if (originalTambahTabungan) {
+          originalTambahTabungan();
+        }
+        
+        // Then add effects
+        addSparkleEffect();
+        createConfetti();
+        showSuccessNotification(jumlah);
+        
+        // Add success sound effect simulation
+        const successSound = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+n0v2seBiuA2vPCdSMFKIXO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+n0v2seBiuA2vPCdSMFKIXO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+n0v2seBiuA2vPCdSMFKIXO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+n0v2seBiuA2vPCdSMF');
+        successSound.volume = 0.1;
+        successSound.play().catch(() => {}); // Ignore errors if audio doesn't play
+      };
+    });
     
     // Create floating particles
     function createParticles() {

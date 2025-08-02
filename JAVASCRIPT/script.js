@@ -1,5 +1,18 @@
 let tabungan = JSON.parse(localStorage.getItem("tabungan")) || [];
 
+// Debug: Check data on load
+console.log("Data tabungan saat load:", tabungan);
+
+// Function to clear all data (untuk debugging)
+function clearAllData() {
+  if (confirm("Hapus semua data tabungan?")) {
+    localStorage.removeItem("tabungan");
+    tabungan = [];
+    render();
+    console.log("Data tabungan telah dihapus");
+  }
+}
+
 function tambahTabungan() {
   const jumlah = parseInt(document.getElementById("jumlah").value);
   if (isNaN(jumlah) || jumlah <= 0) {
@@ -7,9 +20,19 @@ function tambahTabungan() {
     return;
   }
 
-  const tanggal = new Date().toISOString().split("T")[0];
+  // Get current date in local timezone
+  const today = new Date();
+  const tanggal = today.getFullYear() + '-' + 
+                 String(today.getMonth() + 1).padStart(2, '0') + '-' + 
+                 String(today.getDate()).padStart(2, '0');
+  
+  console.log("Menambah tabungan:", { tanggal, jumlah }); // Debug log
+  
   tabungan.push({ tanggal, jumlah });
   localStorage.setItem("tabungan", JSON.stringify(tabungan));
+  
+  console.log("Data tabungan sekarang:", tabungan); // Debug log
+  
   document.getElementById("jumlah").value = "";
   render();
 }
@@ -20,22 +43,34 @@ function render() {
   const filterTanggal = document.getElementById("filterTanggal").value;
   let total = 0;
   let totalHariIni = 0;
-  const hariIni = new Date().toISOString().split("T")[0];
+  
+  // Get current date in local timezone
+  const today = new Date();
+  const hariIni = today.getFullYear() + '-' + 
+                  String(today.getMonth() + 1).padStart(2, '0') + '-' + 
+                  String(today.getDate()).padStart(2, '0');
 
-  tabungan.forEach(item => {
+  console.log("Hari ini:", hariIni); // Debug log
+  console.log("Data tabungan:", tabungan); // Debug log
+
+  tabungan.forEach((item, index) => {
     if (!filterTanggal || item.tanggal === filterTanggal) {
       const li = document.createElement("li");
+      li.className = "list-group-item";
       li.textContent = `${item.tanggal} - Rp${item.jumlah.toLocaleString()}`;
       list.appendChild(li);
     }
     total += item.jumlah;
     if (item.tanggal === hariIni) {
       totalHariIni += item.jumlah;
+      console.log("Tabungan hari ini ditemukan:", item); // Debug log
     }
   });
 
-  document.getElementById("totalSemua").textContent = `Total tabungan: Rp${total.toLocaleString()}`;
-  document.getElementById("statusHariIni").textContent = `Total hari ini: Rp${totalHariIni.toLocaleString()}`;
+  console.log("Total hari ini:", totalHariIni); // Debug log
+
+  document.getElementById("totalSemua").innerHTML = `<i class="bi bi-piggy-bank"></i> Total tabungan: Rp${total.toLocaleString()}`;
+  document.getElementById("statusHariIni").innerHTML = `<i class="bi bi-calendar-check"></i> Total hari ini: Rp${totalHariIni.toLocaleString()}`;
 }
 
 function exportCSV() {
