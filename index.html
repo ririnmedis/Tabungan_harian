@@ -291,26 +291,183 @@
       transition: all 0.4s ease;
       position: relative;
       overflow: hidden;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px !important;
     }
     
-    .list-group-item::before {
-      content: '💰';
-      position: absolute;
-      left: -35px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 1.2rem;
-      transition: left 0.3s ease;
+    .list-group-item .savings-info {
+      flex-grow: 1;
+      margin-left: 10px;
+    }
+    
+    .list-group-item .action-buttons {
+      display: flex;
+      gap: 8px;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+    
+    .list-group-item:hover .action-buttons {
+      opacity: 1;
+    }
+    
+    .btn-edit, .btn-delete {
+      padding: 6px 10px;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 35px;
+      height: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .btn-edit {
+      background: linear-gradient(135deg, #17a2b8, #138496);
+      color: white;
+    }
+    
+    .btn-edit:hover {
+      background: linear-gradient(135deg, #138496, #117a8b);
+      transform: scale(1.1);
+    }
+    
+    .btn-delete {
+      background: linear-gradient(135deg, #dc3545, #c82333);
+      color: white;
+    }
+    
+    .btn-delete:hover {
+      background: linear-gradient(135deg, #c82333, #bd2130);
+      transform: scale(1.1);
+    }
+    
+    /* Edit Modal Styles */
+    .edit-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      backdrop-filter: blur(5px);
+    }
+    
+    .edit-modal-content {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9));
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      animation: modalSlideIn 0.3s ease;
+    }
+    
+    @keyframes modalSlideIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(-50px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+    
+    @keyframes modalSlideOut {
+      0% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(0.8) translateY(-50px);
+      }
+    }
+    
+    .edit-modal h3 {
+      color: #667eea;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+    
+    .edit-modal .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .edit-modal label {
+      font-weight: 600;
+      color: #666;
+      margin-bottom: 5px;
+      display: block;
+    }
+    
+    .edit-modal input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid rgba(102, 126, 234, 0.3);
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .edit-modal input:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+    }
+    
+    .edit-modal .modal-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    
+    .btn-save, .btn-cancel {
+      flex: 1;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-save {
+      background: linear-gradient(135deg, #28a745, #20c997);
+      color: white;
+    }
+    
+    .btn-save:hover {
+      background: linear-gradient(135deg, #20c997, #17a2b8);
+      transform: translateY(-2px);
+    }
+    
+    .btn-cancel {
+      background: linear-gradient(135deg, #6c757d, #5a6268);
+      color: white;
+    }
+    
+    .btn-cancel:hover {
+      background: linear-gradient(135deg, #5a6268, #495057);
+      transform: translateY(-2px);
     }
     
     .list-group-item:hover {
-      transform: translateX(20px) scale(1.02);
+      transform: translateY(-2px);
       background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85)) !important;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    }
-    
-    .list-group-item:hover::before {
-      left: 15px;
     }
     
     /* Floating background elements */
@@ -353,112 +510,170 @@
     /* Mobile Responsive Styles */
     @media (max-width: 768px) {
       .container {
-        padding: 15px !important;
+        padding: 10px !important;
       }
       
       .welcome-banner {
-        padding: 20px 15px;
-        margin-bottom: 20px;
+        padding: 15px 10px;
+        margin-bottom: 15px;
+        border-radius: 20px;
       }
       
       .welcome-title {
-        font-size: 1.8rem !important;
-        margin-bottom: 10px;
+        font-size: 1.6rem !important;
+        margin-bottom: 8px;
       }
       
       .welcome-subtitle {
-        font-size: 1rem !important;
+        font-size: 0.9rem !important;
       }
       
       .coin-animation {
-        font-size: 1.5rem !important;
+        font-size: 1.3rem !important;
       }
       
       .main-card {
-        padding: 20px !important;
-        margin: 0 5px;
+        padding: 15px !important;
+        margin: 0 2px;
       }
       
       .animated-title {
-        font-size: 1.5rem !important;
-        margin-bottom: 15px !important;
+        font-size: 1.4rem !important;
+        margin-bottom: 10px !important;
       }
       
       .magic-icon {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
       }
       
       /* Mobile input styling */
-      .row.g-4.align-items-center.mb-5 {
-        margin-bottom: 2rem !important;
+      .row.g-3.align-items-end.mb-4 {
+        margin-bottom: 1.5rem !important;
       }
       
-      .col-md-8, .col-md-4 {
+      .col-lg-5, .col-lg-3, .col-lg-4 {
         margin-bottom: 15px;
+      }
+      
+      .form-label {
+        font-size: 0.9rem !important;
+        margin-bottom: 5px !important;
+      }
+      
+      .input-group {
+        font-size: 1rem !important;
       }
       
       .enhanced-input {
         font-size: 16px !important; /* Prevents zoom on iOS */
-        padding: 12px 15px !important;
+        padding: 10px 12px !important;
+        border: 2px solid rgba(102, 126, 234, 0.3) !important;
+        background: white !important;
       }
       
       .input-group-text {
-        padding: 12px 15px;
+        padding: 10px 12px;
+        font-size: 0.9rem;
       }
       
       .btn-modern {
-        padding: 12px 20px !important;
-        font-size: 0.9rem !important;
-        margin-bottom: 10px;
+        padding: 10px 15px !important;
+        font-size: 0.85rem !important;
+        margin-bottom: 8px;
+        letter-spacing: 0.5px;
       }
       
-      .d-flex.gap-3 {
+      .d-grid.d-sm-flex.gap-2 {
+        gap: 8px !important;
         flex-direction: column !important;
-        gap: 10px !important;
+      }
+      
+      .btn-modern .me-2 {
+        margin-right: 0.25rem !important;
       }
       
       /* Mobile status cards */
       .col-md-6 {
-        margin-bottom: 15px;
+        margin-bottom: 10px;
       }
       
       .status-card, .total-card {
-        padding: 15px !important;
-        font-size: 0.9rem;
+        padding: 12px !important;
+        font-size: 0.85rem;
       }
       
       .status-card i, .total-card i {
-        font-size: 1.2rem !important;
+        font-size: 1.1rem !important;
       }
       
       /* Mobile history section */
       .history-section h4 {
-        font-size: 1.2rem !important;
-        margin-bottom: 15px !important;
+        font-size: 1.1rem !important;
+        margin-bottom: 12px !important;
       }
       
       .date-input {
         width: 100% !important;
         max-width: none !important;
-        margin-bottom: 15px;
+        margin-bottom: 10px;
+        font-size: 16px !important;
+        padding: 8px 12px !important;
       }
       
       .list-group-item {
+        font-size: 0.85rem;
+        padding: 10px 12px !important;
+        margin-bottom: 6px !important;
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 8px;
+        border-radius: 12px !important;
+      }
+      
+      .list-group-item .savings-info {
+        margin-left: 0 !important;
+        width: 100%;
         font-size: 0.9rem;
-        padding: 12px 15px !important;
-        margin-bottom: 8px !important;
       }
       
-      .list-group-item:hover {
-        transform: translateX(10px) scale(1.01) !important;
+      .list-group-item .action-buttons {
+        align-self: flex-end;
+        opacity: 1 !important;
+        gap: 6px;
       }
       
-      .list-group-item::before {
-        font-size: 1rem !important;
+      .btn-edit, .btn-delete {
+        min-width: 28px;
+        height: 28px;
+        font-size: 0.7rem;
+        padding: 4px 6px;
       }
       
-      .list-group-item:hover::before {
-        left: 10px !important;
+      .edit-modal-content {
+        width: 95%;
+        padding: 15px;
+        border-radius: 15px;
+      }
+      
+      .edit-modal h3 {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+      }
+      
+      .edit-modal input {
+        padding: 8px 10px;
+        font-size: 16px; /* Prevent zoom on iOS */
+      }
+      
+      .btn-save, .btn-cancel {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+      }
+      
+      /* Mobile text adjustments */
+      .text-center.text-muted.mb-5 {
+        font-size: 0.95rem !important;
+        margin-bottom: 1rem !important;
       }
       
       /* Mobile floating elements - reduce for performance */
@@ -471,62 +686,141 @@
         animation-duration: 6s !important;
       }
       
-      /* Mobile notifications */
-      .notification-mobile {
-        left: 15px !important;
-        right: 15px !important;
-        top: 15px !important;
-        max-width: none !important;
-        font-size: 1rem !important;
-        padding: 20px !important;
+      /* Adjust spacing */
+      .py-5 {
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
+      }
+      
+      hr {
+        margin: 1.5rem 0 !important;
       }
     }
     
     @media (max-width: 480px) {
+      .container {
+        padding: 8px !important;
+      }
+      
       .welcome-title {
-        font-size: 1.6rem !important;
+        font-size: 1.4rem !important;
+        line-height: 1.3;
       }
       
       .welcome-subtitle {
-        font-size: 0.9rem !important;
+        font-size: 0.8rem !important;
+      }
+      
+      .welcome-banner {
+        padding: 12px 8px;
+        margin-bottom: 12px;
       }
       
       .main-card {
-        padding: 15px !important;
+        padding: 12px !important;
+        border-radius: 15px !important;
       }
       
       .animated-title {
-        font-size: 1.3rem !important;
+        font-size: 1.2rem !important;
+        line-height: 1.3;
       }
       
       .enhanced-input {
         font-size: 16px !important;
-        padding: 10px 12px !important;
+        padding: 8px 10px !important;
+      }
+      
+      .input-group-text {
+        padding: 8px 10px;
+        font-size: 0.8rem;
       }
       
       .btn-modern {
-        padding: 10px 15px !important;
-        font-size: 0.85rem !important;
+        padding: 8px 12px !important;
+        font-size: 0.8rem !important;
+        border-radius: 20px;
       }
       
       .status-card, .total-card {
-        padding: 12px !important;
-        font-size: 0.85rem;
+        padding: 10px !important;
+        font-size: 0.8rem;
+        border-radius: 15px;
+      }
+      
+      .status-card i, .total-card i {
+        font-size: 1rem !important;
       }
       
       .list-group-item {
-        font-size: 0.85rem;
-        padding: 10px 12px !important;
+        font-size: 0.8rem;
+        padding: 8px 10px !important;
+        margin-bottom: 5px !important;
+      }
+      
+      .btn-edit, .btn-delete {
+        min-width: 26px;
+        height: 26px;
+        font-size: 0.65rem;
+      }
+      
+      .edit-modal-content {
+        padding: 12px;
+        border-radius: 12px;
+      }
+      
+      .edit-modal h3 {
+        font-size: 1.1rem;
+        margin-bottom: 12px;
+      }
+      
+      .edit-modal input {
+        padding: 6px 8px;
+        font-size: 16px;
+      }
+      
+      .btn-save, .btn-cancel {
+        padding: 8px 12px;
+        font-size: 0.8rem;
       }
       
       /* Smaller coin animations for very small screens */
       .coin-animation {
-        font-size: 1.2rem !important;
+        font-size: 1rem !important;
       }
       
       /* Hide some decorative elements on very small screens */
       .floating-bg {
         display: none;
+      }
+      
+      /* Adjust text sizes */
+      .text-center.text-muted.mb-5 {
+        font-size: 0.85rem !important;
+      }
+      
+      .history-section h4 {
+        font-size: 1rem !important;
+      }
+      
+      /* Compact date input */
+      .date-input {
+        font-size: 14px !important;
+        padding: 6px 8px !important;
+      }
+      
+      /* Reduce margins */
+      .row.g-3.align-items-center.mb-4 {
+        margin-bottom: 1rem !important;
+      }
+      
+      .row.g-3.mb-4 {
+        margin-bottom: 1rem !important;
+      }
+      
+      hr {
+        margin: 1rem 0 !important;
+        border-width: 2px !important;
       }
     }
     
@@ -546,15 +840,112 @@
       
       /* Larger touch targets */
       .btn-modern {
-        min-height: 48px;
+        min-height: 44px;
       }
       
       .enhanced-input {
-        min-height: 48px;
+        min-height: 44px;
       }
       
       .date-input {
-        min-height: 48px;
+        min-height: 44px;
+      }
+      
+      .btn-edit, .btn-delete {
+        min-width: 32px;
+        min-height: 32px;
+      }
+    }
+    
+    /* Landscape orientation for mobile */
+    @media (max-width: 768px) and (orientation: landscape) {
+      .welcome-banner {
+        padding: 10px 15px;
+        margin-bottom: 10px;
+      }
+      
+      .welcome-title {
+        font-size: 1.3rem !important;
+        margin-bottom: 5px;
+      }
+      
+      .welcome-subtitle {
+        font-size: 0.8rem !important;
+      }
+      
+      .main-card {
+        padding: 12px !important;
+      }
+      
+      .animated-title {
+        font-size: 1.2rem !important;
+        margin-bottom: 8px !important;
+      }
+      
+      .coin-animation {
+        font-size: 1rem !important;
+      }
+      
+      .py-5 {
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.5rem !important;
+      }
+      
+      .row.g-3.align-items-center.mb-4 {
+        margin-bottom: 0.8rem !important;
+      }
+      
+      .row.g-3.mb-4 {
+        margin-bottom: 0.8rem !important;
+      }
+      
+      hr {
+        margin: 0.8rem 0 !important;
+      }
+    }
+    
+    /* Extra small devices */
+    @media (max-width: 320px) {
+      .container {
+        padding: 5px !important;
+      }
+      
+      .welcome-title {
+        font-size: 1.2rem !important;
+      }
+      
+      .welcome-subtitle {
+        font-size: 0.75rem !important;
+      }
+      
+      .animated-title {
+        font-size: 1.1rem !important;
+      }
+      
+      .btn-modern {
+        font-size: 0.75rem !important;
+        padding: 6px 10px !important;
+      }
+      
+      .enhanced-input, .date-input {
+        font-size: 14px !important;
+        padding: 6px 8px !important;
+      }
+      
+      .input-group-text {
+        padding: 6px 8px;
+        font-size: 0.75rem;
+      }
+      
+      .list-group-item {
+        font-size: 0.75rem;
+        padding: 6px 8px !important;
+      }
+      
+      .btn-edit, .btn-delete {
+        min-width: 24px;
+        height: 24px;
+        font-size: 0.6rem;
       }
     }
   </style>
@@ -590,22 +981,36 @@
         💸 Kelola tabungan harianmu dengan mudah dan menyenangkan!
       </p>
 
-      <div class="row g-3 align-items-center mb-4">
-        <div class="col-12 col-md-8 mb-3 mb-md-0">
-          <div class="input-group input-group-lg">
+      <div class="row g-3 align-items-end mb-4">
+        <div class="col-12 col-lg-5 mb-2 mb-lg-0">
+          <label class="form-label fw-semibold mb-2" style="color: #667eea;">
+            💰 Jumlah Tabungan
+          </label>
+          <div class="input-group">
             <span class="input-group-text" style="background: linear-gradient(135deg, #28a745, #20c997); color: white; border: none; border-radius: 15px 0 0 15px;">
               <i class="bi bi-currency-dollar"></i>
             </span>
             <input type="number" id="jumlah" class="enhanced-input" placeholder="Masukkan jumlah tabungan (Rp)" style="border-radius: 0 15px 15px 0;" />
           </div>
         </div>
-        <div class="col-12 col-md-4">
-          <div class="d-grid d-md-flex gap-2">
+        <div class="col-12 col-sm-6 col-lg-3 mb-2 mb-lg-0">
+          <label class="form-label fw-semibold mb-2" style="color: #667eea;">
+            📅 Tanggal
+          </label>
+          <div class="input-group">
+            <span class="input-group-text" style="background: linear-gradient(135deg, #6f42c1, #563d7c); color: white; border: none; border-radius: 15px 0 0 15px;">
+              <i class="bi bi-calendar-date"></i>
+            </span>
+            <input type="date" id="tanggalTabungan" class="form-control date-input" style="border-radius: 0 15px 15px 0;" />
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="d-grid d-sm-flex gap-2">
             <button class="btn btn-modern btn-lg flex-fill" onclick="tambahTabungan()">
-              <i class="bi bi-plus-circle me-2"></i> <span class="d-none d-sm-inline">Tambah</span><span class="d-sm-none">+</span>
+              <i class="bi bi-plus-circle me-2"></i> Tambah Tabungan
             </button>
             <button class="btn btn-modern btn-export btn-lg flex-fill" onclick="exportCSV()">
-              <i class="bi bi-download me-2"></i> <span class="d-none d-sm-inline">Export</span><span class="d-sm-none">📤</span>
+              <i class="bi bi-download me-2"></i> Export CSV
             </button>
           </div>
         </div>
@@ -864,11 +1269,19 @@
           // Fallback implementation if original function not available
           console.log("Using fallback tambahTabungan");
           
-          // Get current date in local timezone
-          const today = new Date();
-          const tanggal = today.getFullYear() + '-' + 
-                         String(today.getMonth() + 1).padStart(2, '0') + '-' + 
-                         String(today.getDate()).padStart(2, '0');
+          const tanggalInput = document.getElementById("tanggalTabungan").value;
+          
+          // Use selected date or current date
+          let tanggal;
+          if (tanggalInput) {
+            tanggal = tanggalInput;
+          } else {
+            // Get current date in local timezone
+            const today = new Date();
+            tanggal = today.getFullYear() + '-' + 
+                     String(today.getMonth() + 1).padStart(2, '0') + '-' + 
+                     String(today.getDate()).padStart(2, '0');
+          }
           
           // Get or initialize tabungan array
           let tabungan = JSON.parse(localStorage.getItem("tabungan")) || [];
@@ -881,6 +1294,14 @@
           console.log("Data tabungan sekarang:", tabungan);
           
           document.getElementById("jumlah").value = "";
+          document.getElementById("tanggalTabungan").value = "";
+          
+          // Set today's date again as default
+          const today = new Date();
+          const todayString = today.getFullYear() + '-' + 
+                             String(today.getMonth() + 1).padStart(2, '0') + '-' + 
+                             String(today.getDate()).padStart(2, '0');
+          document.getElementById('tanggalTabungan').value = todayString;
           
           // Call render if available
           if (typeof render === 'function') {
@@ -910,6 +1331,13 @@
     
     // Initialize welcome animation
     document.addEventListener('DOMContentLoaded', function() {
+      // Set today's date as default
+      const today = new Date();
+      const todayString = today.getFullYear() + '-' + 
+                         String(today.getMonth() + 1).padStart(2, '0') + '-' + 
+                         String(today.getDate()).padStart(2, '0');
+      document.getElementById('tanggalTabungan').value = todayString;
+      
       // Ensure render is called when page loads
       if (typeof render === 'function') {
         render();
